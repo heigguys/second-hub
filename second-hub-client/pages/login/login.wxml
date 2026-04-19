@@ -1,0 +1,6 @@
+﻿<view class="container">
+  <view class="card">
+    <input class="input" placeholder="昵称" value="{{nickname}}" bindinput="onInput" />
+    <button class="btn-primary" bindtap="login">一键登录</button>
+  </view>
+</view>

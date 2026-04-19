@@ -1,0 +1,52 @@
+﻿.search-box {
+  display: flex;
+  gap: 12rpx;
+  align-items: center;
+}
+
+.search-input {
+  flex: 1;
+  height: 64rpx;
+  border: 1px solid #dcdfe6;
+  border-radius: 12rpx;
+  padding: 0 16rpx;
+}
+
+.goods-item {
+  display: flex;
+  gap: 20rpx;
+}
+
+.cover {
+  width: 180rpx;
+  height: 180rpx;
+  border-radius: 12rpx;
+}
+
+.right {
+  flex: 1;
+}
+
+.title {
+  font-size: 30rpx;
+  font-weight: 600;
+}
+
+.desc {
+  margin-top: 8rpx;
+  color: #606266;
+  font-size: 24rpx;
+}
+
+.price {
+  margin-top: 20rpx;
+  color: #f56c6c;
+  font-size: 34rpx;
+  font-weight: 700;
+}
+
+.footer {
+  text-align: center;
+  color: #909399;
+  padding: 20rpx 0;
+}

@@ -1,0 +1,27 @@
+﻿<view class="container">
+  <view class="card">
+    <image class="cover" src="{{detail.coverImage}}" mode="aspectFill" />
+    <view class="title">{{detail.title}}</view>
+    <view class="price">¥{{detail.price}}</view>
+    <view class="desc">{{detail.description}}</view>
+    <view class="seller">卖家：{{detail.sellerName || '未知'}}</view>
+    <view class="action-row">
+      <button size="mini" bindtap="toggleFavorite">{{detail.favorite ? '取消收藏' : '收藏'}}</button>
+      <button class="btn-primary" size="mini" bindtap="createOrder">立即下单</button>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="sub-title">留言区</view>
+    <view class="comment-input-row">
+      <input class="comment-input" placeholder="说点什么..." value="{{commentText}}" bindinput="onCommentInput" />
+      <button size="mini" bindtap="submitComment">发送</button>
+    </view>
+    <block wx:for="{{comments}}" wx:key="id">
+      <view class="comment-item">
+        <view class="comment-user">{{item.nickname}}</view>
+        <view>{{item.content}}</view>
+      </view>
+    </block>
+  </view>
+</view>

@@ -1,0 +1,184 @@
+﻿CREATE DATABASE IF NOT EXISTS `db_second_hub` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `db_second_hub`;
+
+CREATE TABLE IF NOT EXISTS `user` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `openid` VARCHAR(64) DEFAULT NULL,
+  `nickname` VARCHAR(64) NOT NULL,
+  `avatar_url` VARCHAR(255) DEFAULT NULL,
+  `phone` VARCHAR(32) DEFAULT NULL,
+  `status` TINYINT NOT NULL DEFAULT 1 COMMENT '1正常 0禁用',
+  `password` VARCHAR(64) DEFAULT NULL,
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `is_deleted` TINYINT NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_openid` (`openid`),
+  KEY `idx_user_status` (`status`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `admin_user` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(64) NOT NULL,
+  `password` VARCHAR(64) NOT NULL,
+  `real_name` VARCHAR(64) NOT NULL,
+  `role_name` VARCHAR(32) NOT NULL DEFAULT 'AUDITOR',
+  `status` TINYINT NOT NULL DEFAULT 1,
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `is_deleted` TINYINT NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_admin_username` (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `category` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(64) NOT NULL,
+  `sort` INT NOT NULL DEFAULT 0,
+  `status` TINYINT NOT NULL DEFAULT 1,
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `is_deleted` TINYINT NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  KEY `idx_category_sort` (`sort`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `goods` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `user_id` BIGINT NOT NULL,
+  `category_id` BIGINT NOT NULL,
+  `title` VARCHAR(128) NOT NULL,
+  `description` TEXT NOT NULL,
+  `price` DECIMAL(10,2) NOT NULL,
+  `cover_image` VARCHAR(255) NOT NULL,
+  `status` VARCHAR(32) NOT NULL DEFAULT 'PENDING',
+  `reject_reason` VARCHAR(255) DEFAULT NULL,
+  `view_count` INT NOT NULL DEFAULT 0,
+  `favorite_count` INT NOT NULL DEFAULT 0,
+  `comment_count` INT NOT NULL DEFAULT 0,
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `is_deleted` TINYINT NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  KEY `idx_goods_user` (`user_id`),
+  KEY `idx_goods_category` (`category_id`),
+  KEY `idx_goods_status` (`status`),
+  KEY `idx_goods_created_at` (`created_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `goods_image` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `goods_id` BIGINT NOT NULL,
+  `image_url` VARCHAR(255) NOT NULL,
+  `sort` INT NOT NULL DEFAULT 1,
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `is_deleted` TINYINT NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  KEY `idx_goods_image_goods` (`goods_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `goods_favorite` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `user_id` BIGINT NOT NULL,
+  `goods_id` BIGINT NOT NULL,
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `is_deleted` TINYINT NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_user_goods_favorite` (`user_id`,`goods_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `goods_comment` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `goods_id` BIGINT NOT NULL,
+  `user_id` BIGINT NOT NULL,
+  `content` VARCHAR(500) NOT NULL,
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `is_deleted` TINYINT NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  KEY `idx_goods_comment_goods` (`goods_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `trade_order` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `order_no` VARCHAR(64) NOT NULL,
+  `goods_id` BIGINT NOT NULL,
+  `buyer_id` BIGINT NOT NULL,
+  `seller_id` BIGINT NOT NULL,
+  `amount` DECIMAL(10,2) NOT NULL,
+  `note` VARCHAR(500) DEFAULT NULL,
+  `order_status` VARCHAR(32) NOT NULL DEFAULT 'PENDING_PAYMENT',
+  `pay_status` VARCHAR(32) NOT NULL DEFAULT 'UNPAID',
+  `buyer_confirmed` TINYINT NOT NULL DEFAULT 0,
+  `seller_confirmed` TINYINT NOT NULL DEFAULT 0,
+  `paid_at` DATETIME DEFAULT NULL,
+  `finished_at` DATETIME DEFAULT NULL,
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `is_deleted` TINYINT NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_order_no` (`order_no`),
+  KEY `idx_order_buyer` (`buyer_id`),
+  KEY `idx_order_seller` (`seller_id`),
+  KEY `idx_order_status` (`order_status`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `goods_report` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `goods_id` BIGINT NOT NULL,
+  `reporter_id` BIGINT NOT NULL,
+  `reason` VARCHAR(255) NOT NULL,
+  `content` VARCHAR(500) DEFAULT NULL,
+  `status` VARCHAR(32) NOT NULL DEFAULT 'PENDING',
+  `handler_id` BIGINT DEFAULT NULL,
+  `handle_result` VARCHAR(500) DEFAULT NULL,
+  `handled_at` DATETIME DEFAULT NULL,
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `is_deleted` TINYINT NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  KEY `idx_report_status` (`status`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `notice` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(128) NOT NULL,
+  `content` TEXT NOT NULL,
+  `cover_url` VARCHAR(255) DEFAULT NULL,
+  `status` TINYINT NOT NULL DEFAULT 1,
+  `publish_admin_id` BIGINT DEFAULT NULL,
+  `published_at` DATETIME DEFAULT NULL,
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `is_deleted` TINYINT NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  KEY `idx_notice_status` (`status`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `goods_audit` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `goods_id` BIGINT NOT NULL,
+  `admin_id` BIGINT NOT NULL,
+  `result` VARCHAR(32) NOT NULL,
+  `reason` VARCHAR(255) DEFAULT NULL,
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `is_deleted` TINYINT NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  KEY `idx_audit_goods` (`goods_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO `admin_user` (`username`,`password`,`real_name`,`role_name`,`status`) VALUES
+('admin','e10adc3949ba59abbe56e057f20f883','系统管理员','SUPER_ADMIN',1)
+ON DUPLICATE KEY UPDATE `updated_at` = CURRENT_TIMESTAMP;
+
+INSERT INTO `user` (`openid`,`nickname`,`avatar_url`,`phone`,`status`,`password`) VALUES
+('wx_seed_user_001','测试用户A',NULL,'13800000001',1,'e10adc3949ba59abbe56e057f20f883'),
+('wx_seed_user_002','测试用户B',NULL,'13800000002',1,'e10adc3949ba59abbe56e057f20f883')
+ON DUPLICATE KEY UPDATE `updated_at` = CURRENT_TIMESTAMP;
+
+INSERT INTO `category` (`name`,`sort`,`status`) VALUES
+('手机数码',100,1),('电脑办公',90,1),('家电家具',80,1),('图书文体',70,1),('服饰鞋包',60,1)
+ON DUPLICATE KEY UPDATE `updated_at` = CURRENT_TIMESTAMP;

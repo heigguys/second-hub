@@ -1,0 +1,17 @@
+﻿.input, .textarea, .picker {
+  border: 1px solid #dcdfe6;
+  border-radius: 10rpx;
+  margin-bottom: 16rpx;
+  padding: 16rpx;
+}
+
+.textarea {
+  min-height: 180rpx;
+}
+
+.cover {
+  width: 240rpx;
+  height: 240rpx;
+  border-radius: 10rpx;
+  margin: 12rpx 0;
+}

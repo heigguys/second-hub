@@ -1,0 +1,21 @@
+﻿<view class="container">
+  <view class="card role-row">
+    <button size="mini" data-role="buyer" bindtap="switchRole">买家订单</button>
+    <button size="mini" data-role="seller" bindtap="switchRole">卖家订单</button>
+  </view>
+
+  <block wx:for="{{list}}" wx:key="id">
+    <view class="card">
+      <view>订单号：{{item.orderNo}}</view>
+      <view>商品：{{item.goodsTitle}}</view>
+      <view>金额：¥{{item.amount}}</view>
+      <view>状态：{{item.orderStatus}} / {{item.payStatus}}</view>
+      <view class="actions">
+        <button size="mini" data-id="{{item.id}}" data-action="pay" bindtap="doAction">支付</button>
+        <button size="mini" data-id="{{item.id}}" data-action="buyerConfirm" bindtap="doAction">买家确认</button>
+        <button size="mini" data-id="{{item.id}}" data-action="sellerConfirm" bindtap="doAction">卖家确认</button>
+        <button size="mini" data-id="{{item.id}}" data-action="cancel" bindtap="doAction">取消</button>
+      </view>
+    </view>
+  </block>
+</view>

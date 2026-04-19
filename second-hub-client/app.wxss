@@ -1,0 +1,20 @@
+﻿page {
+  background-color: #f7f8fa;
+  color: #303133;
+}
+
+.container {
+  padding: 24rpx;
+}
+
+.card {
+  background-color: #fff;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin-bottom: 20rpx;
+}
+
+.btn-primary {
+  background-color: #1677ff;
+  color: #fff;
+}

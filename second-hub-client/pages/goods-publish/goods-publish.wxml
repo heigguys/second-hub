@@ -1,0 +1,13 @@
+﻿<view class="container">
+  <view class="card">
+    <picker mode="selector" range="{{categories}}" range-key="name" bindchange="onCategoryChange">
+      <view class="picker">请选择分类</view>
+    </picker>
+    <input class="input" placeholder="商品标题" data-field="title" bindinput="onInput" value="{{form.title}}" />
+    <textarea class="textarea" placeholder="商品描述" data-field="description" bindinput="onInput" value="{{form.description}}" />
+    <input class="input" placeholder="价格" type="digit" data-field="price" bindinput="onInput" value="{{form.price}}" />
+    <button bindtap="chooseImage">选择图片并上传</button>
+    <image wx:if="{{form.coverImage}}" class="cover" src="{{form.coverImage}}" mode="aspectFill" />
+    <button class="btn-primary" bindtap="submit">提交发布</button>
+  </view>
+</view>

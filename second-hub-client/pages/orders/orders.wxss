@@ -1,0 +1,11 @@
+﻿.role-row {
+  display: flex;
+  gap: 12rpx;
+}
+
+.actions {
+  margin-top: 12rpx;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8rpx;
+}
