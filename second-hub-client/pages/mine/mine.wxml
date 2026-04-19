@@ -1,4 +1,4 @@
-﻿<view class="container">
+<view class="container">
   <view class="card">
     <view wx:if="{{token}}">当前已登录</view>
     <view wx:else>当前未登录</view>

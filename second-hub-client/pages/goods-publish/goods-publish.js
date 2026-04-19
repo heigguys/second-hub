@@ -1,4 +1,4 @@
-﻿const { request, uploadFile } = require('../../utils/request')
+const { request, uploadFile } = require('../../utils/request')
 
 Page({
   data: {

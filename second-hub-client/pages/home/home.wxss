@@ -1,4 +1,4 @@
-﻿.search-box {
+.search-box {
   display: flex;
   gap: 12rpx;
   align-items: center;

@@ -1,4 +1,4 @@
-﻿<view class="container">
+<view class="container">
   <block wx:for="{{list}}" wx:key="id">
     <view class="card">
       <view>{{item.title}}</view>

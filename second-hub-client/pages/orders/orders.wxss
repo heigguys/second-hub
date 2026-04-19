@@ -1,4 +1,4 @@
-﻿.role-row {
+.role-row {
   display: flex;
   gap: 12rpx;
 }

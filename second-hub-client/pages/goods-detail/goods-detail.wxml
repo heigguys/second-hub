@@ -1,4 +1,4 @@
-﻿<view class="container">
+<view class="container">
   <view class="card">
     <image class="cover" src="{{detail.coverImage}}" mode="aspectFill" />
     <view class="title">{{detail.title}}</view>

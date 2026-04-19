@@ -1,4 +1,4 @@
-﻿<view class="container">
+<view class="container">
   <view class="card role-row">
     <button size="mini" data-role="buyer" bindtap="switchRole">买家订单</button>
     <button size="mini" data-role="seller" bindtap="switchRole">卖家订单</button>
