@@ -36,6 +36,8 @@ springdoc:
 
 knife4j:
   enable: true
+  # 生产环境改为false
+  production: false
 
 app:
   jwt:
