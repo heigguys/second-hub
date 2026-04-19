@@ -11,6 +11,7 @@ import com.nie.secondhub.mapper.AdminUserMapper;
 import com.nie.secondhub.mapper.UserMapper;
 import com.nie.secondhub.security.JwtTokenUtil;
 import com.nie.secondhub.service.AuthService;
+import com.nie.secondhub.service.support.WechatAuthClient;
 import com.nie.secondhub.util.Md5Util;
 import com.nie.secondhub.vo.LoginVO;
 import jakarta.annotation.Resource;
@@ -27,10 +28,12 @@ public class AuthServiceImpl implements AuthService {
     private AdminUserMapper adminUserMapper;
     @Resource
     private JwtTokenUtil jwtTokenUtil;
+    @Resource
+    private WechatAuthClient wechatAuthClient;
 
     @Override
     public LoginVO wxLogin(WxLoginRequest request) {
-        String openid = "wx_" + Md5Util.md5(request.getCode());
+        String openid = wechatAuthClient.code2Session(request.getCode()).openid();
         User user = userMapper.selectOne(new LambdaQueryWrapper<User>().eq(User::getOpenid, openid));
         LocalDateTime now = LocalDateTime.now();
         if (user == null) {

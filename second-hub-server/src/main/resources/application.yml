@@ -41,10 +41,13 @@ knife4j:
 
 app:
   jwt:
-    secret: second-hub-demo-secret-key-please-change
+    secret: secondHub
     expire-seconds: 86400
     issuer: second-hub
   storage:
     type: local
     local-prefix: /uploads/
     image-host: https://img.131213.xyz/
+  wechat:
+    appid: wxaa51d047f8b7ef3c
+    appsecret: 5df0f6c2df21d35508665cb8aa444cc8
