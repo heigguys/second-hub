@@ -53,7 +53,7 @@ public class AdminOpsServiceImpl implements AdminOpsService {
     private TradeOrderMapper tradeOrderMapper;
     @Resource
     private GoodsReportMapper goodsReportMapper;
-    @Resource
+    @Resource(name = "stringRedisTemplate")
     private StringRedisTemplate redisTemplate;
     @Resource
     private ObjectMapper objectMapper;
@@ -101,7 +101,7 @@ public class AdminOpsServiceImpl implements AdminOpsService {
         Page<User> userPage = userMapper.selectPage(page, new LambdaQueryWrapper<User>()
                 .like(keyword != null && !keyword.isBlank(), User::getNickname, keyword)
                 .orderByDesc(User::getCreatedAt));
-        return PageResponse.builder()
+        return PageResponse.<User>builder()
                 .total(userPage.getTotal())
                 .pageNo(userPage.getCurrent())
                 .pageSize(userPage.getSize())
@@ -159,7 +159,7 @@ public class AdminOpsServiceImpl implements AdminOpsService {
         Page<Notice> page = new Page<>(pageNo, pageSize);
         Page<Notice> noticePage = noticeMapper.selectPage(page, new LambdaQueryWrapper<Notice>()
                 .orderByDesc(Notice::getPublishedAt));
-        return PageResponse.builder()
+        return PageResponse.<Notice>builder()
                 .total(noticePage.getTotal())
                 .pageNo(noticePage.getCurrent())
                 .pageSize(noticePage.getSize())

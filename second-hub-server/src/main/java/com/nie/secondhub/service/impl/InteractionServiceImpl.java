@@ -201,7 +201,7 @@ public class InteractionServiceImpl implements InteractionService {
                 .eq(status != null && !status.isBlank(), GoodsReport::getStatus, status)
                 .orderByDesc(GoodsReport::getCreatedAt));
 
-        return PageResponse.builder()
+        return PageResponse.<GoodsReport>builder()
                 .total(reportPage.getTotal())
                 .pageNo(reportPage.getCurrent())
                 .pageSize(reportPage.getSize())
