@@ -1,1 +1,25 @@
+.mine-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
 
+.status {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #303133;
+}
+
+.tip {
+  color: #606266;
+  font-size: 26rpx;
+}
+
+.action-btn {
+  margin-top: 8rpx;
+}
+
+.danger {
+  color: #f56c6c;
+  border-color: #fbc4c4;
+}

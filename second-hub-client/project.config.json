@@ -18,7 +18,7 @@
       "disablePlugins": [],
       "outputPath": ""
     },
-    "urlCheck": true,
+    "urlCheck": false,
     "lazyloadPlaceholderEnable": false,
     "preloadBackgroundData": false,
     "autoAudits": false,

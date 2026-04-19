@@ -1,10 +1,14 @@
 <view class="container">
-  <view class="card">
-    <view wx:if="{{token}}">当前已登录</view>
-    <view wx:else>当前未登录</view>
-    <button bindtap="toLogin">微信登录</button>
-    <button bindtap="toFavorites">我的收藏</button>
-    <button bindtap="toMyGoods">我的发布</button>
-    <button bindtap="logout">退出登录</button>
+  <view class="card mine-card" wx:if="{{!token}}">
+    <view class="status">当前未登录</view>
+    <view class="tip">登录后可查看我的收藏和发布内容</view>
+    <button class="btn-primary action-btn" bindtap="toLogin">微信登录</button>
+  </view>
+
+  <view class="card mine-card" wx:else>
+    <view class="status">当前已登录</view>
+    <button class="action-btn" bindtap="toFavorites">我的收藏</button>
+    <button class="action-btn" bindtap="toMyGoods">我的发布</button>
+    <button class="action-btn danger" bindtap="logout">退出登录</button>
   </view>
 </view>

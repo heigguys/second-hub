@@ -3,7 +3,8 @@ const { request } = require('../../utils/request')
 Page({
   data: {
     nickname: '微信用户',
-    avatarUrl: ''
+    avatarUrl: '',
+    loading: false
   },
 
   onInput(e) {
@@ -11,12 +12,20 @@ Page({
   },
 
   login() {
+    if (this.data.loading) {
+      return
+    }
+
+    this.setData({ loading: true })
+
     wx.login({
       success: (res) => {
         if (!res.code) {
           wx.showToast({ title: '获取code失败', icon: 'none' })
+          this.setData({ loading: false })
           return
         }
+
         request({
           url: '/api/user/auth/wx-login',
           method: 'POST',
@@ -32,7 +41,16 @@ Page({
           setTimeout(() => {
             wx.switchTab({ url: '/pages/home/home' })
           }, 500)
+        }).catch((err) => {
+          const msg = (err && (err.message || err.msg)) || '登录失败'
+          wx.showToast({ title: msg, icon: 'none' })
+        }).finally(() => {
+          this.setData({ loading: false })
         })
+      },
+      fail: () => {
+        wx.showToast({ title: '微信登录调用失败', icon: 'none' })
+        this.setData({ loading: false })
       }
     })
   }

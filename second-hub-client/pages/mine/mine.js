@@ -4,7 +4,32 @@ Page({
   },
 
   onShow() {
-    this.setData({ token: wx.getStorageSync('token') || '' })
+    const token = wx.getStorageSync('token') || ''
+    this.setData({ token })
+    if (!token) {
+      this.promptLogin()
+    }
+  },
+
+  promptLogin() {
+    if (this.loginPrompting) {
+      return
+    }
+    this.loginPrompting = true
+    wx.showModal({
+      title: '未登录',
+      content: '登录后可查看收藏和发布内容',
+      confirmText: '去登录',
+      cancelText: '暂不',
+      success: (res) => {
+        if (res.confirm) {
+          wx.navigateTo({ url: '/pages/login/login' })
+        }
+      },
+      complete: () => {
+        this.loginPrompting = false
+      }
+    })
   },
 
   toLogin() {
