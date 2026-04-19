@@ -41,7 +41,7 @@ knife4j:
 
 app:
   jwt:
-    secret: secondHub
+    secret: secondHubsecondHubsecondHubsecondHub
     expire-seconds: 86400
     issuer: second-hub
   storage:

@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.time.Instant;
 import java.util.Date;
 import java.util.Map;
@@ -22,7 +24,7 @@ public class JwtTokenUtil {
     public String generateToken(Long userId, String role) {
         Instant now = Instant.now();
         Instant expireAt = now.plusSeconds(jwtProperties.getExpireSeconds());
-        SecretKey secretKey = Keys.hmacShaKeyFor(jwtProperties.getSecret().getBytes(StandardCharsets.UTF_8));
+        SecretKey secretKey = buildSecretKey(jwtProperties.getSecret());
         return Jwts.builder()
                 .issuer(jwtProperties.getIssuer())
                 .subject(String.valueOf(userId))
@@ -34,11 +36,21 @@ public class JwtTokenUtil {
     }
 
     public Claims parse(String token) {
-        SecretKey secretKey = Keys.hmacShaKeyFor(jwtProperties.getSecret().getBytes(StandardCharsets.UTF_8));
+        SecretKey secretKey = buildSecretKey(jwtProperties.getSecret());
         return Jwts.parser()
                 .verifyWith(secretKey)
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
+    }
+
+    private SecretKey buildSecretKey(String rawSecret) {
+        byte[] source = rawSecret == null ? new byte[0] : rawSecret.getBytes(StandardCharsets.UTF_8);
+        try {
+            byte[] hashed = MessageDigest.getInstance("SHA-256").digest(source);
+            return Keys.hmacShaKeyFor(hashed);
+        } catch (NoSuchAlgorithmException e) {
+            throw new IllegalStateException("SHA-256 not supported", e);
+        }
     }
 }

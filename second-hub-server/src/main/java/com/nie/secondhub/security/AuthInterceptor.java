@@ -25,6 +25,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 
         String path = request.getRequestURI();
         if (path.startsWith("/api/user/auth/") || path.startsWith("/api/admin/auth/")
+                || path.startsWith("/api/user/public/")
                 || path.startsWith("/v3/api-docs") || path.startsWith("/swagger-ui")
                 || path.startsWith("/doc.html") || path.startsWith("/uploads/")
                 || path.startsWith("/error")) {
