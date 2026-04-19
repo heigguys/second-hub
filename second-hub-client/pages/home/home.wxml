@@ -1,19 +1,44 @@
-<view class="container">
-  <view class="card search-box">
-    <input class="search-input" placeholder="搜索商品" value="{{keyword}}" bindinput="onKeywordInput" />
-    <button class="btn-primary" size="mini" bindtap="onSearch">搜索</button>
+<view class="container home-page">
+  <view class="panel search-panel">
+    <view class="section-title">发现好物</view>
+    <view class="section-subtitle">看看同学们刚发布的二手宝贝</view>
+    <view class="search-row">
+      <input
+        class="input-control search-input"
+        placeholder="搜索商品名称"
+        value="{{keyword}}"
+        bindinput="onKeywordInput"
+        bindconfirm="onSearch"
+        confirm-type="search"
+      />
+      <button class="primary-btn search-btn" bindtap="onSearch">搜索</button>
+    </view>
   </view>
 
-  <block wx:for="{{goodsList}}" wx:key="id">
-    <view class="card goods-item" data-id="{{item.id}}" bindtap="toDetail">
-      <image class="cover" src="{{item.coverImage}}" mode="aspectFill" />
-      <view class="right">
-        <view class="title">{{item.title}}</view>
-        <view class="desc">{{item.description}}</view>
-        <view class="price">¥{{item.price}}</view>
+  <view wx:if="{{goodsList.length > 0}}">
+    <block wx:for="{{goodsList}}" wx:key="id">
+      <view class="panel goods-card" data-id="{{item.id}}" bindtap="toDetail">
+        <image class="goods-cover" src="{{item.coverImage}}" mode="aspectFill" />
+        <view class="goods-main">
+          <view class="goods-title">{{item.title}}</view>
+          <view class="goods-desc">{{item.description || '发布者暂无更多描述'}}</view>
+          <view class="goods-bottom">
+            <text class="price-text">￥{{item.price}}</text>
+            <text class="tag {{item.status == 1 ? 'tag--success' : 'tag--warning'}}">
+              {{item.status == 1 ? '在售' : '处理中'}}
+            </text>
+          </view>
+        </view>
       </view>
-    </view>
-  </block>
+    </block>
+  </view>
 
-  <view class="footer">{{loading ? '加载中...' : (hasMore ? '上拉加载更多' : '没有更多了')}}</view>
+  <view class="panel empty-state" wx:else>
+    <view class="empty-state-title">暂时还没有商品</view>
+    <view class="empty-state-desc">换个关键词试试，或者晚点再来看看</view>
+  </view>
+
+  <view class="list-footer" wx:if="{{goodsList.length > 0 || loading}}">
+    {{loading ? '正在加载...' : (hasMore ? '上拉加载更多' : '已经到底啦')}}
+  </view>
 </view>

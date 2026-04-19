@@ -1,20 +1,161 @@
 page {
-  background-color: #f7f8fa;
-  color: #303133;
+  background: #f4f7fc;
+  color: #1f2d3d;
+  font-size: 28rpx;
+  line-height: 1.5;
 }
 
 .container {
+  box-sizing: border-box;
+  min-height: 100vh;
   padding: 24rpx;
+  padding-bottom: calc(24rpx + env(safe-area-inset-bottom));
 }
 
-.card {
-  background-color: #fff;
-  border-radius: 16rpx;
+.panel {
+  background: #ffffff;
+  border-radius: 20rpx;
+  box-shadow: 0 8rpx 28rpx rgba(52, 104, 184, 0.1);
   padding: 24rpx;
   margin-bottom: 20rpx;
 }
 
-.btn-primary {
-  background-color: #1677ff;
-  color: #fff;
+.section-title {
+  font-size: 34rpx;
+  font-weight: 700;
+  color: #17253d;
+}
+
+.section-subtitle {
+  margin-top: 8rpx;
+  font-size: 24rpx;
+  color: #8a94a6;
+}
+
+.muted-text {
+  color: #8a94a6;
+}
+
+.primary-btn,
+.ghost-btn,
+.danger-btn {
+  height: 84rpx;
+  line-height: 84rpx;
+  border-radius: 14rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+}
+
+.primary-btn {
+  background: linear-gradient(135deg, #5ca6ff, #2f7df6);
+  color: #ffffff;
+  border: none;
+}
+
+.ghost-btn {
+  background: #edf4ff;
+  color: #2f7df6;
+  border: 1px solid #d7e8ff;
+}
+
+.danger-btn {
+  background: #fff2f2;
+  color: #d63f52;
+  border: 1px solid #ffd6db;
+}
+
+.primary-btn::after,
+.ghost-btn::after,
+.danger-btn::after {
+  border: none;
+}
+
+.form-item {
+  margin-bottom: 20rpx;
+}
+
+.label-text {
+  display: block;
+  margin-bottom: 10rpx;
+  font-size: 26rpx;
+  color: #4b5b74;
+}
+
+.input-control,
+.textarea-control,
+.picker-control {
+  box-sizing: border-box;
+  width: 100%;
+  border-radius: 14rpx;
+  border: 1px solid #dce8fb;
+  background: #f9fbff;
+  color: #1f2d3d;
+}
+
+.input-control,
+.picker-control {
+  height: 84rpx;
+  line-height: 84rpx;
+  padding: 0 22rpx;
+}
+
+.textarea-control {
+  min-height: 200rpx;
+  padding: 20rpx 22rpx;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 90rpx;
+  height: 44rpx;
+  border-radius: 999rpx;
+  padding: 0 18rpx;
+  font-size: 22rpx;
+  font-weight: 500;
+}
+
+.tag--info {
+  background: #eaf2ff;
+  color: #2f7df6;
+}
+
+.tag--success {
+  background: #e7f8ef;
+  color: #20a064;
+}
+
+.tag--warning {
+  background: #fff6e8;
+  color: #c47c1f;
+}
+
+.tag--danger {
+  background: #ffecee;
+  color: #d63f52;
+}
+
+.price-text {
+  color: #ff5c6a;
+  font-size: 34rpx;
+  font-weight: 700;
+}
+
+.empty-state {
+  text-align: center;
+  color: #8a94a6;
+  padding: 40rpx 20rpx;
+}
+
+.empty-state-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #50627c;
+}
+
+.empty-state-desc {
+  margin-top: 10rpx;
+  font-size: 24rpx;
+  color: #95a0b3;
 }

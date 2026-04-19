@@ -1,27 +1,52 @@
-<view class="container">
-  <view class="card">
-    <image class="cover" src="{{detail.coverImage}}" mode="aspectFill" />
-    <view class="title">{{detail.title}}</view>
-    <view class="price">¥{{detail.price}}</view>
-    <view class="desc">{{detail.description}}</view>
-    <view class="seller">卖家：{{detail.sellerName || '未知'}}</view>
+<view class="container detail-page">
+  <view class="panel" wx:if="{{detail.id}}">
+    <image class="detail-cover" src="{{detail.coverImage}}" mode="aspectFill" />
+    <view class="detail-title">{{detail.title}}</view>
+    <view class="detail-price-row">
+      <text class="price-text">￥{{detail.price}}</text>
+      <text class="tag {{detail.status == 1 ? 'tag--success' : 'tag--warning'}}">
+        {{detail.status == 1 ? '在售中' : '处理中'}}
+      </text>
+    </view>
+    <view class="detail-desc">{{detail.description || '暂无描述信息'}}</view>
+    <view class="detail-seller">卖家：{{detail.sellerName || '未知用户'}}</view>
+
     <view class="action-row">
-      <button size="mini" bindtap="toggleFavorite">{{detail.favorite ? '取消收藏' : '收藏'}}</button>
-      <button class="btn-primary" size="mini" bindtap="createOrder">立即下单</button>
+      <button class="ghost-btn action-btn" bindtap="toggleFavorite">
+        {{detail.favorite ? '取消收藏' : '收藏商品'}}
+      </button>
+      <button class="primary-btn action-btn" bindtap="createOrder">立即下单</button>
     </view>
   </view>
 
-  <view class="card">
-    <view class="sub-title">留言区</view>
+  <view class="panel empty-state" wx:else>
+    <view class="empty-state-title">商品信息加载中</view>
+    <view class="empty-state-desc">请稍后刷新重试</view>
+  </view>
+
+  <view class="panel">
+    <view class="section-title comment-title">留言区</view>
     <view class="comment-input-row">
-      <input class="comment-input" placeholder="说点什么..." value="{{commentText}}" bindinput="onCommentInput" />
-      <button size="mini" bindtap="submitComment">发送</button>
+      <input
+        class="input-control comment-input"
+        placeholder="说点什么吧..."
+        value="{{commentText}}"
+        bindinput="onCommentInput"
+      />
+      <button class="ghost-btn comment-btn" bindtap="submitComment">发送</button>
     </view>
-    <block wx:for="{{comments}}" wx:key="id">
-      <view class="comment-item">
-        <view class="comment-user">{{item.nickname}}</view>
-        <view>{{item.content}}</view>
-      </view>
-    </block>
+
+    <view wx:if="{{comments.length > 0}}">
+      <block wx:for="{{comments}}" wx:key="id">
+        <view class="comment-item">
+          <view class="comment-user">{{item.nickname || '匿名用户'}}</view>
+          <view class="comment-content">{{item.content}}</view>
+        </view>
+      </block>
+    </view>
+
+    <view class="empty-state comment-empty" wx:else>
+      <view class="empty-state-desc">还没有留言，来抢个沙发吧</view>
+    </view>
   </view>
 </view>

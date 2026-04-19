@@ -1,1 +1,45 @@
+.favorites-page {
+  background: linear-gradient(180deg, #eef5ff 0%, #f4f7fc 200rpx);
+}
 
+.goods-card {
+  display: flex;
+  gap: 18rpx;
+}
+
+.goods-cover {
+  width: 170rpx;
+  height: 170rpx;
+  border-radius: 14rpx;
+  background: #edf4ff;
+}
+
+.goods-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.goods-title {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: #1c2c47;
+  word-break: break-all;
+}
+
+.goods-desc {
+  margin-top: 10rpx;
+  font-size: 24rpx;
+  color: #7d8ca0;
+  line-height: 1.6;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.goods-footer {
+  margin-top: 18rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

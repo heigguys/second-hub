@@ -1,13 +1,25 @@
-<view class="container">
-  <block wx:for="{{list}}" wx:key="id">
-    <view class="card">
-      <view>{{item.title}}</view>
-      <view>状态：{{item.status}}</view>
-      <view>¥{{item.price}}</view>
-      <view class="actions">
-        <button size="mini" data-id="{{item.id}}" bindtap="offline">下架</button>
-        <button size="mini" data-id="{{item.id}}" bindtap="del">删除</button>
+<view class="container my-goods-page">
+  <view wx:if="{{list.length > 0}}">
+    <block wx:for="{{list}}" wx:key="id">
+      <view class="panel goods-card">
+        <image class="goods-cover" src="{{item.coverImage}}" mode="aspectFill" />
+        <view class="goods-main">
+          <view class="goods-head">
+            <view class="goods-title">{{item.title}}</view>
+            <text class="tag {{item._statusClass}}">{{item._statusText}}</text>
+          </view>
+          <view class="goods-price">价格：<text class="price-text">￥{{item.price}}</text></view>
+          <view class="actions">
+            <button class="ghost-btn action-btn" size="mini" data-id="{{item.id}}" bindtap="offline">下架</button>
+            <button class="danger-btn action-btn" size="mini" data-id="{{item.id}}" bindtap="del">删除</button>
+          </view>
+        </view>
       </view>
-    </view>
-  </block>
+    </block>
+  </view>
+
+  <view class="panel empty-state" wx:else>
+    <view class="empty-state-title">你还没有发布商品</view>
+    <view class="empty-state-desc">去“发布”页上传你的第一件闲置吧</view>
+  </view>
 </view>

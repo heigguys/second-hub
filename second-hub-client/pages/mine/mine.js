@@ -1,11 +1,19 @@
 Page({
   data: {
-    token: ''
+    token: '',
+    userInfo: {},
+    nicknameInitial: '我'
   },
 
   onShow() {
     const token = wx.getStorageSync('token') || ''
-    this.setData({ token })
+    const userInfo = wx.getStorageSync('userInfo') || {}
+    const nickname = userInfo.nickname || ''
+    this.setData({
+      token,
+      userInfo,
+      nicknameInitial: nickname ? nickname.substring(0, 1) : '我'
+    })
     if (!token) {
       this.promptLogin()
     }
@@ -18,7 +26,7 @@ Page({
     this.loginPrompting = true
     wx.showModal({
       title: '未登录',
-      content: '登录后可查看收藏和发布内容',
+      content: '登录后可查看收藏、发布和订单信息',
       confirmText: '去登录',
       cancelText: '暂不',
       success: (res) => {
@@ -46,7 +54,8 @@ Page({
 
   logout() {
     wx.removeStorageSync('token')
-    this.setData({ token: '' })
-    wx.showToast({ title: '已退出', icon: 'none' })
+    wx.removeStorageSync('userInfo')
+    this.setData({ token: '', userInfo: {}, nicknameInitial: '我' })
+    wx.showToast({ title: '已退出登录', icon: 'none' })
   }
 })

@@ -1,6 +1,28 @@
-.input {
-  border: 1px solid #dcdfe6;
-  border-radius: 10rpx;
-  margin-bottom: 16rpx;
-  padding: 16rpx;
+.login-page {
+  padding-top: 60rpx;
+  background: linear-gradient(180deg, #eaf3ff 0%, #f4f7fc 360rpx);
+}
+
+.hero-panel {
+  text-align: center;
+  padding-top: 34rpx;
+  padding-bottom: 34rpx;
+}
+
+.login-icon {
+  width: 94rpx;
+  height: 94rpx;
+  margin: 0 auto 18rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6cafff, #2f7df6);
+  color: #ffffff;
+  font-size: 46rpx;
+  font-weight: 700;
+  line-height: 94rpx;
+}
+
+.login-btn {
+  width: 100%;
+  margin-top: 10rpx;
+  padding: 0;
 }

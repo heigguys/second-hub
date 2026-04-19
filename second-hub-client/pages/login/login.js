@@ -21,7 +21,7 @@ Page({
     wx.login({
       success: (res) => {
         if (!res.code) {
-          wx.showToast({ title: '获取code失败', icon: 'none' })
+          wx.showToast({ title: '获取 code 失败', icon: 'none' })
           this.setData({ loading: false })
           return
         }

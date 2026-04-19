@@ -13,9 +13,14 @@
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "Second Hub",
     "navigationBarBackgroundColor": "#ffffff",
-    "backgroundColor": "#f5f5f5"
+    "backgroundColor": "#f4f7fc",
+    "backgroundTextStyle": "dark"
   },
   "tabBar": {
+    "color": "#8a94a6",
+    "selectedColor": "#2f7df6",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "white",
     "list": [
       {
         "pagePath": "pages/home/home",

@@ -1,8 +1,22 @@
-<view class="container">
-  <block wx:for="{{list}}" wx:key="id">
-    <view class="card" data-id="{{item.id}}" bindtap="toDetail">
-      <view>{{item.title}}</view>
-      <view>¥{{item.price}}</view>
-    </view>
-  </block>
+<view class="container favorites-page">
+  <view wx:if="{{list.length > 0}}">
+    <block wx:for="{{list}}" wx:key="id">
+      <view class="panel goods-card" data-id="{{item.id}}" bindtap="toDetail">
+        <image class="goods-cover" src="{{item.coverImage}}" mode="aspectFill" />
+        <view class="goods-main">
+          <view class="goods-title">{{item.title}}</view>
+          <view class="goods-desc">{{item.description || '收藏的商品暂无描述'}}</view>
+          <view class="goods-footer">
+            <text class="price-text">￥{{item.price}}</text>
+            <text class="tag tag--info">已收藏</text>
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
+
+  <view class="panel empty-state" wx:else>
+    <view class="empty-state-title">你还没有收藏商品</view>
+    <view class="empty-state-desc">去首页逛逛，把喜欢的宝贝收藏起来吧</view>
+  </view>
 </view>

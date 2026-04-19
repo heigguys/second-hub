@@ -1,14 +1,37 @@
-<view class="container">
-  <view class="card mine-card" wx:if="{{!token}}">
-    <view class="status">当前未登录</view>
-    <view class="tip">登录后可查看我的收藏和发布内容</view>
-    <button class="btn-primary action-btn" bindtap="toLogin">微信登录</button>
+<view class="container mine-page">
+  <view class="panel profile-panel">
+    <view class="avatar">{{token ? nicknameInitial : '未'}}</view>
+    <view class="profile-main">
+      <view class="profile-name">{{token ? (userInfo.nickname || '微信用户') : '未登录'}}</view>
+      <view class="profile-tip">
+        {{token ? '欢迎回来，看看今天有什么新发布' : '登录后可同步收藏、发布和订单数据'}}
+      </view>
+    </view>
   </view>
 
-  <view class="card mine-card" wx:else>
-    <view class="status">当前已登录</view>
-    <button class="action-btn" bindtap="toFavorites">我的收藏</button>
-    <button class="action-btn" bindtap="toMyGoods">我的发布</button>
-    <button class="action-btn danger" bindtap="logout">退出登录</button>
+  <view class="panel" wx:if="{{!token}}">
+    <view class="empty-state login-empty">
+      <view class="empty-state-title">还没有登录账号</view>
+      <view class="empty-state-desc">点击下方按钮即可完成微信登录</view>
+    </view>
+    <button class="primary-btn" bindtap="toLogin">微信一键登录</button>
+  </view>
+
+  <view wx:else>
+    <view class="panel menu-panel">
+      <view class="menu-item" bindtap="toFavorites">
+        <text class="menu-text">我的收藏</text>
+        <text class="menu-arrow">></text>
+      </view>
+      <view class="menu-divider"></view>
+      <view class="menu-item" bindtap="toMyGoods">
+        <text class="menu-text">我的发布</text>
+        <text class="menu-arrow">></text>
+      </view>
+    </view>
+
+    <view class="panel">
+      <button class="danger-btn" bindtap="logout">退出登录</button>
+    </view>
   </view>
 </view>

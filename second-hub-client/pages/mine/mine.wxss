@@ -1,25 +1,64 @@
-.mine-card {
+.mine-page {
+  background: linear-gradient(180deg, #eef5ff 0%, #f4f7fc 280rpx);
+}
+
+.profile-panel {
   display: flex;
-  flex-direction: column;
-  gap: 16rpx;
+  align-items: center;
+  gap: 18rpx;
 }
 
-.status {
-  font-size: 32rpx;
-  font-weight: 600;
-  color: #303133;
+.avatar {
+  width: 98rpx;
+  height: 98rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #8dbfff, #4b95ff);
+  color: #ffffff;
+  font-size: 38rpx;
+  font-weight: 700;
+  text-align: center;
+  line-height: 98rpx;
 }
 
-.tip {
-  color: #606266;
-  font-size: 26rpx;
+.profile-main {
+  flex: 1;
+  min-width: 0;
 }
 
-.action-btn {
+.profile-name {
+  font-size: 34rpx;
+  font-weight: 700;
+  color: #1d2d47;
+}
+
+.profile-tip {
   margin-top: 8rpx;
+  color: #8090a7;
+  font-size: 24rpx;
 }
 
-.danger {
-  color: #f56c6c;
-  border-color: #fbc4c4;
+.login-empty {
+  padding: 10rpx 0 24rpx;
+}
+
+.menu-item {
+  height: 86rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.menu-text {
+  font-size: 30rpx;
+  color: #20314d;
+}
+
+.menu-arrow {
+  color: #9cabc0;
+  font-size: 34rpx;
+}
+
+.menu-divider {
+  height: 1px;
+  background: #edf2fa;
 }

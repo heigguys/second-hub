@@ -21,7 +21,10 @@ Page({
   },
 
   loadComments() {
-    request({ url: `/api/user/comments/${this.data.id}`, data: { pageNo: 1, pageSize: 20 } }).then((data) => {
+    request({
+      url: `/api/user/comments/${this.data.id}`,
+      data: { pageNo: 1, pageSize: 20 }
+    }).then((data) => {
       this.setData({ comments: data.records || [] })
     })
   },
@@ -31,7 +34,10 @@ Page({
       ? request({ url: `/api/user/favorites/${this.data.id}`, method: 'DELETE' })
       : request({ url: `/api/user/favorites/${this.data.id}`, method: 'POST' })
     req.then(() => {
-      wx.showToast({ title: this.data.detail.favorite ? '已取消收藏' : '收藏成功', icon: 'none' })
+      wx.showToast({
+        title: this.data.detail.favorite ? '已取消收藏' : '收藏成功',
+        icon: 'none'
+      })
       this.loadDetail()
     })
   },

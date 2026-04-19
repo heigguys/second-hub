@@ -10,14 +10,20 @@ Page({
       coverImage: '',
       images: []
     },
-    categories: []
+    categories: [],
+    categoryIndex: 0,
+    submitting: false
   },
 
   onShow() {
     request({ url: '/api/user/public/categories' }).then((data) => {
-      this.setData({ categories: data || [] })
-      if (data && data.length && !this.data.form.categoryId) {
-        this.setData({ 'form.categoryId': data[0].id })
+      const categories = data || []
+      this.setData({ categories })
+      if (categories.length && !this.data.form.categoryId) {
+        this.setData({
+          'form.categoryId': categories[0].id,
+          categoryIndex: 0
+        })
       }
     })
   },
@@ -31,7 +37,10 @@ Page({
     const index = Number(e.detail.value)
     const category = this.data.categories[index]
     if (category) {
-      this.setData({ 'form.categoryId': category.id })
+      this.setData({
+        'form.categoryId': category.id,
+        categoryIndex: index
+      })
     }
   },
 
@@ -39,27 +48,36 @@ Page({
     wx.chooseImage({
       count: 6,
       success: async (res) => {
-        wx.showLoading({ title: '上传中' })
-        const uploaded = []
-        for (const path of res.tempFilePaths) {
-          const url = await uploadFile(path)
-          uploaded.push(url)
+        wx.showLoading({ title: '上传中...' })
+        try {
+          const uploaded = []
+          for (const path of res.tempFilePaths) {
+            const url = await uploadFile(path)
+            uploaded.push(url)
+          }
+          this.setData({
+            'form.coverImage': uploaded[0] || '',
+            'form.images': uploaded
+          })
+        } finally {
+          wx.hideLoading()
         }
-        wx.hideLoading()
-        this.setData({
-          'form.coverImage': uploaded[0],
-          'form.images': uploaded
-        })
       }
     })
   },
 
   submit() {
-    const f = this.data.form
-    if (!f.title || !f.description || !f.price || !f.coverImage || !f.categoryId) {
-      wx.showToast({ title: '请完善信息', icon: 'none' })
+    if (this.data.submitting) {
       return
     }
+
+    const f = this.data.form
+    if (!f.title || !f.description || !f.price || !f.coverImage || !f.categoryId) {
+      wx.showToast({ title: '请完善商品信息', icon: 'none' })
+      return
+    }
+
+    this.setData({ submitting: true })
     request({
       url: '/api/user/goods',
       method: 'POST',
@@ -74,8 +92,17 @@ Page({
     }).then(() => {
       wx.showToast({ title: '发布成功，待审核', icon: 'none' })
       this.setData({
-        form: { categoryId: f.categoryId, title: '', description: '', price: '', coverImage: '', images: [] }
+        form: {
+          categoryId: f.categoryId,
+          title: '',
+          description: '',
+          price: '',
+          coverImage: '',
+          images: []
+        }
       })
+    }).finally(() => {
+      this.setData({ submitting: false })
     })
   }
 })

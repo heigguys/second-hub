@@ -1,13 +1,71 @@
-<view class="container">
-  <view class="card">
-    <picker mode="selector" range="{{categories}}" range-key="name" bindchange="onCategoryChange">
-      <view class="picker">请选择分类</view>
-    </picker>
-    <input class="input" placeholder="商品标题" data-field="title" bindinput="onInput" value="{{form.title}}" />
-    <textarea class="textarea" placeholder="商品描述" data-field="description" bindinput="onInput" value="{{form.description}}" />
-    <input class="input" placeholder="价格" type="digit" data-field="price" bindinput="onInput" value="{{form.price}}" />
-    <button bindtap="chooseImage">选择图片并上传</button>
-    <image wx:if="{{form.coverImage}}" class="cover" src="{{form.coverImage}}" mode="aspectFill" />
-    <button class="btn-primary" bindtap="submit">提交发布</button>
+<view class="container publish-page">
+  <view class="panel">
+    <view class="section-title">发布闲置</view>
+    <view class="section-subtitle">信息越完整，成交会更快</view>
+
+    <view class="form-item">
+      <text class="label-text">商品分类</text>
+      <picker
+        mode="selector"
+        range="{{categories}}"
+        range-key="name"
+        value="{{categoryIndex}}"
+        bindchange="onCategoryChange"
+      >
+        <view class="picker-control">
+          {{categories.length ? categories[categoryIndex].name : '请选择分类'}}
+        </view>
+      </picker>
+    </view>
+
+    <view class="form-item">
+      <text class="label-text">商品标题</text>
+      <input
+        class="input-control"
+        placeholder="例如：95新机械键盘"
+        data-field="title"
+        bindinput="onInput"
+        value="{{form.title}}"
+      />
+    </view>
+
+    <view class="form-item">
+      <text class="label-text">商品描述</text>
+      <textarea
+        class="textarea-control"
+        placeholder="使用时长、配件情况、交易方式等"
+        data-field="description"
+        bindinput="onInput"
+        value="{{form.description}}"
+      />
+    </view>
+
+    <view class="form-item">
+      <text class="label-text">价格（元）</text>
+      <input
+        class="input-control"
+        placeholder="请输入价格"
+        type="digit"
+        data-field="price"
+        bindinput="onInput"
+        value="{{form.price}}"
+      />
+    </view>
+
+    <view class="form-item">
+      <text class="label-text">商品图片</text>
+      <button class="ghost-btn upload-btn" bindtap="chooseImage">选择图片并上传</button>
+      <view class="upload-tip">首张会作为封面，最多上传 6 张</view>
+
+      <view class="preview-grid" wx:if="{{form.images.length > 0}}">
+        <block wx:for="{{form.images}}" wx:key="*this">
+          <image class="preview-item" src="{{item}}" mode="aspectFill" />
+        </block>
+      </view>
+    </view>
+
+    <button class="primary-btn submit-btn" bindtap="submit" loading="{{submitting}}" disabled="{{submitting}}">
+      {{submitting ? '发布中...' : '提交发布'}}
+    </button>
   </view>
 </view>
