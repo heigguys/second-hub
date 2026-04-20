@@ -14,6 +14,8 @@ public interface GoodsService {
     void deleteGoods(Long userId, Long goodsId);
 
     void offlineGoods(Long userId, Long goodsId);
+    
+    void onlineGoods(Long userId, Long goodsId);
 
     GoodsDetailVO goodsDetail(Long goodsId, Long currentUserId);
 

@@ -120,6 +120,21 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
+    public void onlineGoods(Long userId, Long goodsId) {
+        Goods goods = getById(goodsId);
+        if (!goods.getUserId().equals(userId)) {
+            throw new BizException(403, "无权上架此商品");
+        }
+        if (!GoodsStatus.OFFLINE.name().equals(goods.getStatus())) {
+            throw new BizException("仅已下架商品可上架");
+        }
+        goods.setStatus(GoodsStatus.PENDING.name());
+        goods.setRejectReason(null);
+        goods.setUpdatedAt(LocalDateTime.now());
+        goodsMapper.updateById(goods);
+    }
+
+    @Override
     public GoodsDetailVO goodsDetail(Long goodsId, Long currentUserId) {
         Goods goods = getById(goodsId);
         if (!GoodsStatus.APPROVED.name().equals(goods.getStatus())

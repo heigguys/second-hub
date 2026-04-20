@@ -10,9 +10,10 @@
           </view>
           <view class="goods-price">价格：<text class="price-text">¥{{item.price}}</text></view>
           <view class="actions">
-            <button class="ghost-btn action-btn" size="mini" data-id="{{item.id}}" bindtap="toEdit">编辑</button>
-            <button class="ghost-btn action-btn" size="mini" data-id="{{item.id}}" bindtap="offline">下架</button>
-            <button class="danger-btn action-btn" size="mini" data-id="{{item.id}}" bindtap="del">删除</button>
+            <button class="ghost-btn action-btn" data-id="{{item.id}}" bindtap="toEdit">编辑</button>
+            <button wx:if="{{item._showOffline}}" class="ghost-btn action-btn" data-id="{{item.id}}" bindtap="offline">下架</button>
+            <button wx:if="{{item._showOnline}}" class="ghost-btn action-btn" data-id="{{item.id}}" bindtap="online">上架</button>
+            <button class="danger-btn action-btn" data-id="{{item.id}}" bindtap="del">删除</button>
           </view>
         </view>
       </view>

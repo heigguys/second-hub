@@ -45,6 +45,12 @@ public class UserGoodsController {
         return ApiResponse.success(null);
     }
 
+    @PostMapping("/{goodsId}/online")
+    public ApiResponse<Void> online(@PathVariable Long goodsId) {
+        goodsService.onlineGoods(LoginUserHolder.requireUserId(), goodsId);
+        return ApiResponse.success(null);
+    }
+
     @GetMapping("/list")
     public ApiResponse<PageResponse<GoodsVO>> list(@Valid GoodsQueryRequest request) {
         return ApiResponse.success(goodsService.userGoodsPage(request));
