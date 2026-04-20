@@ -1,5 +1,8 @@
 const { request, uploadFile } = require('../../utils/request')
 
+const MAX_FILE_SIZE_MB = 5
+const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024
+
 Page({
   data: {
     form: {
@@ -12,7 +15,8 @@ Page({
     },
     categories: [],
     categoryIndex: 0,
-    submitting: false
+    submitting: false,
+    maxFileSizeText: `${MAX_FILE_SIZE_MB}MB`
   },
 
   onShow() {
@@ -52,6 +56,13 @@ Page({
     wx.chooseImage({
       count: 6,
       success: async (res) => {
+        const tempFiles = res.tempFiles || []
+        const oversize = tempFiles.find((file) => Number(file.size || 0) > MAX_FILE_SIZE_BYTES)
+        if (oversize) {
+          wx.showToast({ title: `单个文件不能超过${MAX_FILE_SIZE_MB}MB`, icon: 'none' })
+          return
+        }
+
         wx.showLoading({ title: '上传中...' })
         try {
           const uploaded = []
