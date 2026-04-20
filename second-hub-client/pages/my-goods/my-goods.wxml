@@ -8,8 +8,9 @@
             <view class="goods-title">{{item.title}}</view>
             <text class="tag {{item._statusClass}}">{{item._statusText}}</text>
           </view>
-          <view class="goods-price">价格：<text class="price-text">￥{{item.price}}</text></view>
+          <view class="goods-price">价格：<text class="price-text">¥{{item.price}}</text></view>
           <view class="actions">
+            <button class="ghost-btn action-btn" size="mini" data-id="{{item.id}}" bindtap="toEdit">编辑</button>
             <button class="ghost-btn action-btn" size="mini" data-id="{{item.id}}" bindtap="offline">下架</button>
             <button class="danger-btn action-btn" size="mini" data-id="{{item.id}}" bindtap="del">删除</button>
           </view>

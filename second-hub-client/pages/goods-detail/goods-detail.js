@@ -1,11 +1,16 @@
 const { request } = require('../../utils/request')
 
+const EDIT_GOODS_ID_KEY = 'goods_publish_edit_goods_id'
+
 Page({
   data: {
     id: null,
     detail: {},
+    detailStatusText: '',
+    detailStatusClass: 'tag--info',
     comments: [],
-    commentText: ''
+    commentText: '',
+    isOwner: false
   },
 
   onLoad(options) {
@@ -16,8 +21,33 @@ Page({
 
   loadDetail() {
     request({ url: `/api/user/goods/${this.data.id}` }).then((data) => {
-      this.setData({ detail: data || {} })
+      const detail = data || {}
+      const userInfo = wx.getStorageSync('userInfo') || {}
+      const currentUserId = Number(userInfo.id || 0)
+      this.setData({
+        detail,
+        detailStatusText: this.getStatusText(detail.status),
+        detailStatusClass: this.getStatusClass(detail.status),
+        isOwner: currentUserId > 0 && Number(detail.userId || 0) === currentUserId
+      })
     })
+  },
+
+  getStatusText(status) {
+    const text = String(status || '').toUpperCase()
+    if (text === 'APPROVED' || text === 'ON_SALE' || text === '1') return '在售中'
+    if (text === 'PENDING' || text === '2') return '审核中'
+    if (text === 'OFFLINE' || text === '3') return '已下架'
+    if (text === 'REJECTED') return '已驳回'
+    return '处理中'
+  },
+
+  getStatusClass(status) {
+    const text = String(status || '').toUpperCase()
+    if (text === 'APPROVED' || text === 'ON_SALE' || text === '1') return 'tag--success'
+    if (text === 'PENDING' || text === '2') return 'tag--warning'
+    if (text === 'OFFLINE' || text === '3' || text === 'REJECTED') return 'tag--danger'
+    return 'tag--info'
   },
 
   loadComments() {
@@ -27,6 +57,14 @@ Page({
     }).then((data) => {
       this.setData({ comments: data.records || [] })
     })
+  },
+
+  toEdit() {
+    if (!this.data.isOwner) {
+      return
+    }
+    wx.setStorageSync(EDIT_GOODS_ID_KEY, this.data.id)
+    wx.switchTab({ url: '/pages/goods-publish/goods-publish' })
   },
 
   toggleFavorite() {

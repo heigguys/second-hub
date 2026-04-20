@@ -3,15 +3,16 @@
     <image class="detail-cover" src="{{detail.coverImage}}" mode="aspectFill" />
     <view class="detail-title">{{detail.title}}</view>
     <view class="detail-price-row">
-      <text class="price-text">￥{{detail.price}}</text>
-      <text class="tag {{detail.status == 1 ? 'tag--success' : 'tag--warning'}}">
-        {{detail.status == 1 ? '在售中' : '处理中'}}
+      <text class="price-text">¥{{detail.price}}</text>
+      <text class="tag {{detailStatusClass}}">
+        {{detailStatusText}}
       </text>
     </view>
     <view class="detail-desc">{{detail.description || '暂无描述信息'}}</view>
     <view class="detail-seller">卖家：{{detail.sellerName || '未知用户'}}</view>
 
     <view class="action-row">
+      <button wx:if="{{isOwner}}" class="ghost-btn action-btn" bindtap="toEdit">编辑商品</button>
       <button class="ghost-btn action-btn" bindtap="toggleFavorite">
         {{detail.favorite ? '取消收藏' : '收藏商品'}}
       </button>
@@ -20,7 +21,7 @@
   </view>
 
   <view class="panel empty-state" wx:else>
-    <view class="empty-state-title">商品信息加载中</view>
+    <view class="empty-state-title">商品信息加载中...</view>
     <view class="empty-state-desc">请稍后刷新重试</view>
   </view>
 
@@ -46,7 +47,7 @@
     </view>
 
     <view class="empty-state comment-empty" wx:else>
-      <view class="empty-state-desc">还没有留言，来抢个沙发吧</view>
+      <view class="empty-state-desc">还没有留言，来抢个沙发吧~</view>
     </view>
   </view>
 </view>

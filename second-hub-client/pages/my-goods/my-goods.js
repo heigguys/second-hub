@@ -1,5 +1,7 @@
 const { request } = require('../../utils/request')
 
+const EDIT_GOODS_ID_KEY = 'goods_publish_edit_goods_id'
+
 Page({
   data: {
     list: []
@@ -22,19 +24,29 @@ Page({
   },
 
   getStatusText(status) {
-    const text = String(status || '')
-    if (text === '1' || text.toUpperCase() === 'ON_SALE') return '在售'
-    if (text === '2' || text.toUpperCase() === 'PENDING') return '审核中'
-    if (text === '3' || text.toUpperCase() === 'OFFLINE') return '已下架'
+    const text = String(status || '').toUpperCase()
+    if (text === '1' || text === 'ON_SALE' || text === 'APPROVED') return '在售'
+    if (text === '2' || text === 'PENDING') return '审核中'
+    if (text === '3' || text === 'OFFLINE') return '已下架'
+    if (text === 'REJECTED') return '已驳回'
     return text || '未知'
   },
 
   getStatusClass(status) {
     const text = String(status || '').toUpperCase()
-    if (text === '1' || text === 'ON_SALE') return 'tag--success'
+    if (text === '1' || text === 'ON_SALE' || text === 'APPROVED') return 'tag--success'
     if (text === '2' || text === 'PENDING') return 'tag--warning'
-    if (text === '3' || text === 'OFFLINE') return 'tag--danger'
+    if (text === '3' || text === 'OFFLINE' || text === 'REJECTED') return 'tag--danger'
     return 'tag--info'
+  },
+
+  toEdit(e) {
+    const id = Number(e.currentTarget.dataset.id || 0)
+    if (!id) {
+      return
+    }
+    wx.setStorageSync(EDIT_GOODS_ID_KEY, id)
+    wx.switchTab({ url: '/pages/goods-publish/goods-publish' })
   },
 
   offline(e) {

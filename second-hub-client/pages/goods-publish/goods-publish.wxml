@@ -1,6 +1,6 @@
 <view class="container publish-page">
   <view class="panel">
-    <view class="section-title">发布闲置</view>
+    <view class="section-title">{{pageTitle}}</view>
     <view class="section-subtitle">信息越完整，成交会更快</view>
 
     <view class="form-item">
@@ -55,17 +55,20 @@
     <view class="form-item">
       <text class="label-text">商品图片</text>
       <button class="ghost-btn upload-btn" bindtap="chooseImage">选择图片并上传</button>
-      <view class="upload-tip">首张会作为封面，最多上传 6 张，单个文件不超过 {{maxFileSizeText}}</view>
+      <view class="upload-tip">首张会作为封面，最多上传 {{maxImages}} 张，单个文件不超过 {{maxFileSizeText}}</view>
 
       <view class="preview-grid" wx:if="{{form.images.length > 0}}">
         <block wx:for="{{form.images}}" wx:key="*this">
-          <image class="preview-item" src="{{item}}" mode="aspectFill" />
+          <view class="preview-item-wrap">
+            <image class="preview-item" src="{{item}}" mode="aspectFill" />
+            <view class="preview-remove" data-index="{{index}}" bindtap="removeImage">×</view>
+          </view>
         </block>
       </view>
     </view>
 
     <button class="primary-btn submit-btn" bindtap="submit" loading="{{submitting}}" disabled="{{submitting}}">
-      {{submitting ? '发布中...' : '提交发布'}}
+      {{submitting ? '提交中...' : submitText}}
     </button>
   </view>
 </view>

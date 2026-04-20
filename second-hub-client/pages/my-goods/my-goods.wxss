@@ -44,6 +44,7 @@
   margin-top: 16rpx;
   display: flex;
   gap: 10rpx;
+  flex-wrap: wrap;
 }
 
 .action-btn {
@@ -52,6 +53,6 @@
   line-height: 62rpx;
   font-size: 24rpx;
   border-radius: 12rpx;
-  min-width: 120rpx;
-  padding: 0 20rpx;
+  min-width: 108rpx;
+  padding: 0 14rpx;
 }
