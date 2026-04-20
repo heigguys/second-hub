@@ -45,6 +45,7 @@ Component({
         return
       }
 
+      this.setData({ selected: index })
       wx.switchTab({ url })
     },
 

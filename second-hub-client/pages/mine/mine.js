@@ -6,6 +6,10 @@ Page({
   },
 
   onShow() {
+    const tabBar = this.getTabBar && this.getTabBar()
+    if (tabBar) {
+      tabBar.setData({ selected: 3 })
+    }
     const token = wx.getStorageSync('token') || ''
     const userInfo = wx.getStorageSync('userInfo') || {}
     const nickname = userInfo.nickname || ''

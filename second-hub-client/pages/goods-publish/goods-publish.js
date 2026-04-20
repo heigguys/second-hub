@@ -16,6 +16,10 @@ Page({
   },
 
   onShow() {
+    const tabBar = this.getTabBar && this.getTabBar()
+    if (tabBar) {
+      tabBar.setData({ selected: 1 })
+    }
     request({ url: '/api/user/public/categories' }).then((data) => {
       const categories = data || []
       this.setData({ categories })
