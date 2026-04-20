@@ -59,6 +59,8 @@ Page({
             'form.coverImage': uploaded[0] || '',
             'form.images': uploaded
           })
+        } catch (e) {
+          // uploadFile has toast handling; catch here to avoid unhandled rejection.
         } finally {
           wx.hideLoading()
         }

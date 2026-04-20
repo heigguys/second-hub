@@ -46,8 +46,9 @@ app:
     issuer: second-hub
   storage:
     type: local
+    local-root: uploads
     local-prefix: /uploads/
-    image-host: https://img.131213.xyz/
+    image-host: http://127.0.0.1:8080
   wechat:
     appid: wxaa51d047f8b7ef3c
     appsecret: 5df0f6c2df21d35508665cb8aa444cc8
