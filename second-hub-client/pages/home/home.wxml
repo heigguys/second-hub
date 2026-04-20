@@ -23,10 +23,8 @@
           <view class="goods-title">{{item.title}}</view>
           <view class="goods-desc">{{item.description || '发布者暂无更多描述'}}</view>
           <view class="goods-bottom">
-            <text class="price-text">￥{{item.price}}</text>
-            <text class="tag {{item.status == 1 ? 'tag--success' : 'tag--warning'}}">
-              {{item.status == 1 ? '在售' : '处理中'}}
-            </text>
+            <text class="price-text">¥{{item.price}}</text>
+            <text class="tag tag--success">在售中</text>
           </view>
         </view>
       </view>
