@@ -1,0 +1,19 @@
+<view class="tab-bar-wrap">
+  <view class="tab-bar safe-area">
+    <block wx:for="{{list}}" wx:key="pagePath">
+      <view
+        class="tab-item"
+        data-index="{{index}}"
+        data-path="{{item.pagePath}}"
+        bindtap="switchTab"
+      >
+        <text
+          class="tab-text {{selected === index ? 'tab-text--active' : ''}}"
+          style="color: {{selected === index ? selectedColor : color}};"
+        >
+          {{item.text}}
+        </text>
+      </view>
+    </block>
+  </view>
+</view>

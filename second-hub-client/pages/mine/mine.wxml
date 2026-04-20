@@ -31,7 +31,7 @@
     </view>
 
     <view class="panel">
-      <button class="danger-btn" bindtap="logout">退出登录</button>
+      <button class="danger-btn logout-btn" bindtap="logout">退出登录</button>
     </view>
   </view>
 </view>

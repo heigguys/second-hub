@@ -9,7 +9,7 @@ page {
   box-sizing: border-box;
   min-height: 100vh;
   padding: 24rpx;
-  padding-bottom: calc(24rpx + env(safe-area-inset-bottom));
+  padding-bottom: calc(124rpx + env(safe-area-inset-bottom));
 }
 
 .panel {

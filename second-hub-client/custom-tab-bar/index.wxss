@@ -1,0 +1,34 @@
+.tab-bar-wrap {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+  background: #ffffff;
+  border-top: 1rpx solid #edf1f7;
+}
+
+.tab-bar {
+  height: 100rpx;
+  display: flex;
+}
+
+.safe-area {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.tab-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tab-text {
+  font-size: 24rpx;
+  line-height: 1;
+}
+
+.tab-text--active {
+  font-weight: 600;
+}
